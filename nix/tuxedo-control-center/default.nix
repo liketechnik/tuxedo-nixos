@@ -1,6 +1,6 @@
 { pkgs, lib, stdenv, copyDesktopItems
 , python3, udev
-, makeWrapper, nodejs, electron_11, fetchFromGitHub
+, makeWrapper, nodejs-14_x, electron_13, fetchFromGitHub
 }:
 
 let
@@ -10,7 +10,9 @@ let
   #    a parameter. For example: `./update.sh 1.1.1`
   # 2. Bump the version attribute and src SHA-256 here.
   # 3. Build and test.
-  version = "1.1.3";
+  version = "1.2.2";
+
+  nodejs = nodejs-14_x;
 
   baseNodePackages = (import ./node-composition.nix {
     inherit pkgs nodejs;
@@ -22,8 +24,12 @@ let
       owner = "tuxedocomputers";
       repo = "tuxedo-control-center";
       rev = "v${version}";
-      sha256 = "etFacSM152DkFWKSdCI3kXCwSwvRXFxZFmUx85JJdGk=";
+      sha256 = "sha256-ytfPHn3QyHL1SyjLutHMeS2YwP1iRmVBjScdOPZjDBM=";
     };
+
+    preInstall = ''
+      chmod +x ./tuxedo-control-center/node_modules/electron-builder/out/cli/cli.js
+    '';
 
     buildInputs = [
       udev
@@ -148,13 +154,13 @@ stdenv.mkDerivation rec {
     # The fix is to run electron on a folder with a `package.json` but the `tuxedo-control-center`
     # package.json expects all files to live under `dist/` and I'm not a huge fan of that
     # structure so we just disable the check and call it a day.
-    makeWrapper ${electron_11}/bin/electron $out/bin/tuxedo-control-center \
+    makeWrapper ${electron_13}/bin/electron $out/bin/tuxedo-control-center \
                 --add-flags "$out/e-app/e-app/main.js" \
                 --add-flags "--no-tccd-version-check" \
                 --prefix NODE_PATH : $out/node_modules
 
     mkdir -p $out/share/polkit-1/actions/
-    cp $out/data/dist-data/de.tuxedocomputers.tcc.policy $out/share/polkit-1/actions/de.tuxedocomputers.tcc.policy
+    cp $out/data/dist-data/com.tuxedocomputers.tccd.policy $out/share/polkit-1/actions/com.tuxedocomputers.tccd.policy
 
     mkdir -p $out/etc/dbus-1/system.d/
     cp $out/data/dist-data/com.tuxedocomputers.tccd.conf $out/etc/dbus-1/system.d/com.tuxedocomputers.tccd.conf

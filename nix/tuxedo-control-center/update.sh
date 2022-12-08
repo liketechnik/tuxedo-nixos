@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash -p nodePackages.node2nix curl
+#!/usr/bin/env bash
 
 set -eu -o pipefail
 
@@ -21,10 +20,11 @@ WORKDIR=$(mktemp -d)
 trap 'rm -r "$WORKDIR"' EXIT
 
 for f in package.json package-lock.json; do
-    curl -f "$TUXEDO_SRC_URL/$f" > "$WORKDIR/$f"
+    wget "$TUXEDO_SRC_URL/$f" -O "$WORKDIR/$f"
 done
 
-node2nix \
+# fixme: that fucking cached stuff is broken now...
+nix run "github:svanderburg/node2nix#node2nix" -- \
  --development \
  --nodejs-14 \
  --input "$WORKDIR/package.json" \
