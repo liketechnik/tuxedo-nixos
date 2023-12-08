@@ -1,36 +1,6 @@
-# This project is abandoned!
-
-```
-                  _  /)
-                 mo / )
-                 |/)\)
-                  /\_
-                  \__|=
-                 (    )
-                 __)(__
-           _____/      \\_____
-          |  _     ___   _   ||
-          | | \     |   | \  ||
-          | |  |    |   |  | ||
-          | |_/     |   |_/  ||
-          | | \     |   |    ||
-          | |  \    |   |    ||
-          | |   \. _|_. | .  ||
-          |                  ||
-          |  name goes here  ||
-          |                  ||
-  *       | *   **    * **   |**      **
-   \))ejm97/.,(//,,..,,\||(,,.,\\,.((//
-```
-
-Consider using [tuxedo-rs](https://github.com/AaronErhardt/tuxedo-rs)
-as a replacement. It has less features, but should get the job done
-well enough. Alternatively, please feel free to fork this repo.
-
-
 # Tuxedo Control Center for NixOS
 
-[![Build](https://github.com/blitz/tuxedo-nixos/actions/workflows/build.yml/badge.svg)](https://github.com/blitz/tuxedo-nixos/actions/workflows/build.yml)
+[![Build](https://github.com/liketechnik/tuxedo-nixos/actions/workflows/build.yml/badge.svg)](https://github.com/liketechnik/tuxedo-nixos/actions/workflows/build.yml)
 
 ## Overview
 
@@ -38,6 +8,8 @@ This repository provides a Nix derivation for the Tuxedo Control
 Center until it is packaged in
 [Nixpkgs](https://github.com/NixOS/nixpkgs) (see
 [NixOS/nixpkgs#132206](https://github.com/NixOS/nixpkgs/issues/132206)).
+It is based on the nix derivation by [blitz](https://github.com/blitz/)
+at [blitz/tuxedo-nixos](https://github.com/blitz/tuxedo-nixos).
 
 [Tuxedo](https://www.tuxedocomputers.com/) is a German laptop
 manufacturer that provides Linux-friendly laptops. Their system
@@ -57,7 +29,7 @@ to your `/etc/nixos/configuration.nix`.
 ```nix
 { config, pkgs, ... }:
 let
-  tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
+  tuxedo = import (builtins.fetchTarball "https://github.com/liketechnik/tuxedo-nixos/archive/master.tar.gz");
 in {
 
  # ...
@@ -86,7 +58,7 @@ First enable the module in your `flake.nix`:
 	# ...
 
 	tuxedo-nixos = {
-	  url = "github:blitz/tuxedo-nixos";
+	  url = "github:liketechnik/tuxedo-nixos";
 
 	  # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
 	  # This should give the least surprises and saves on disk space.
@@ -132,6 +104,9 @@ Until this is fixed follow the instructions that the failing build
 gives you to workaround the issue.
 
 ## Updating
+
+Please note that this derivation uses a modified `package.json`,
+in order to allow for usage with more recent NodeJS versions.
 
 To update to a new version, see the [updating
 instructions](./nix/tuxedo-control-center/README.md).

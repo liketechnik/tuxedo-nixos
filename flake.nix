@@ -1,8 +1,8 @@
 {
-  description = "System Configuration";
+  description = "Tuxedo Control Center packaged for NixOs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -20,11 +20,6 @@
         config = {
           permittedInsecurePackages = [
             "electron-13.6.9"
-            "nodejs-14.21.3"
-            "openssl-1.1.1t"
-            "openssl-1.1.1u"
-            "openssl-1.1.1v"
-            "openssl-1.1.1w"
           ];
         };
       }).pkgs.callPackage ./nix/tuxedo-control-center {};
