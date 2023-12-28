@@ -2,13 +2,13 @@
 
 buildNpmPackage rec {
   pname = "tuxedo-control-center";
-  version = "2.0.11";
+  version = "2.1.2";
 
   src = fetchFromGitHub {
     owner = "tuxedocomputers";
     repo = "tuxedo-control-center";
     rev = "v${version}";
-    sha256 = "sha256-TWO2MQuoIQZI/xhPUlsMPXxLmTyaQS5a1/Jz/oOqPsg=";
+    sha256 = "sha256-gnyvSBRBWeMY7Rhil4ZnnFSZjdPERPZCyEOevgqgB60=";
   };
 
   # These are installed in the right place via copyDesktopItems.
@@ -21,11 +21,12 @@ buildNpmPackage rec {
   prePatch = ''
     cp ${./package-lock.json} package-lock.json
     cp ${./package.json} package.json
-    # build-service calls bundle-service,
-    # which is unnecessary (and incompatible) with nix
-    # but: bundle-service creates directories that are depended on
+    # bundle service calls pkg to package nodejs
+    # into a binary,
+    # which is unnecessary (and incompatible) with nix.
+    # but: pkg creates directories that are depended on
     # in later steps of the build process
-    sed -i -e 's|run-s bundle-service|mkdir -p ./dist/tuxedo-control-center/data/service|' package.json
+    sed -i -e 's|pkg --target node14-linux-x64 --output ./dist/tuxedo-control-center/data/service/tccd ./dist/tuxedo-control-center/service-app/package.json|mkdir -p ./dist/tuxedo-control-center/data/service|' package.json
   '';
 
   # TCC by default writes its config to /etc/tcc, which is
@@ -78,7 +79,7 @@ buildNpmPackage rec {
   npmFlags = [ "--legacy-peer-deps" ];
   makeCacheWritable = true;
 
-  npmDepsHash = "sha256-45buXvV9g6ex85AWDiE1PqaTslkbrztH//hjNwgzqB4=";
+  npmDepsHash = "sha256-RUkQR2uQ7nL04tkLHbBLT1hs6KNQQU0SVzBOhyx7OZ4=";
 
   # Electron tries to download itself if this isn't set. We don't
   # like that in nix so let's prevent it.
