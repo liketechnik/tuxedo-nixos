@@ -60,7 +60,10 @@ in
     ];
 
     systemd.services.tccd = {
-      path = [ cfg.package ];
+      # tccd uses ps, xargs
+      # (note: this is a hack, but replacing 'ps' and 'xargs' in some
+      # string in a typescript file isn't any less hacky I guess)
+      path = with pkgs; [ cfg.package procps findutils ];
 
       description = "Tuxedo Control Center Service";
 

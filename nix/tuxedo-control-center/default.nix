@@ -41,6 +41,7 @@ buildNpmPackage rec {
     for desktopFile in ${lib.concatStringsSep " " desktopItems}; do
       substituteInPlace $desktopFile \
         --replace "/usr/bin/tuxedo-control-center" "$out/bin/tuxedo-control-center" \
+        --replace "/opt/tuxedo-control-center/tuxedo-control-center" "$out/bin/tuxedo-control-center" \
         --replace "/opt/tuxedo-control-center/resources/dist/tuxedo-control-center" "$out"
     done
   '';
