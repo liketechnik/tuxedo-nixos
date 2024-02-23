@@ -2,13 +2,13 @@
 
 buildNpmPackage rec {
   pname = "tuxedo-control-center";
-  version = "2.1.2";
+  version = "2.1.7";
 
   src = fetchFromGitHub {
     owner = "tuxedocomputers";
     repo = "tuxedo-control-center";
     rev = "v${version}";
-    sha256 = "sha256-gnyvSBRBWeMY7Rhil4ZnnFSZjdPERPZCyEOevgqgB60=";
+    sha256 = "sha256-DQlyEA2+cqGdB76pwvtgAW7oZ1ykPzC51kSHJ+ReYLI=";
   };
 
   # These are installed in the right place via copyDesktopItems.
@@ -79,7 +79,7 @@ buildNpmPackage rec {
   npmFlags = [ "--legacy-peer-deps" ];
   makeCacheWritable = true;
 
-  npmDepsHash = "sha256-RUkQR2uQ7nL04tkLHbBLT1hs6KNQQU0SVzBOhyx7OZ4=";
+  npmDepsHash = "sha256-K+X5MNOJHrQ0PnlQQhJnr5xfKEHBImjQC9hIlCEJMYg=";
 
   # Electron tries to download itself if this isn't set. We don't
   # like that in nix so let's prevent it.
