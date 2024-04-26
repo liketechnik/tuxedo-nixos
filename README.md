@@ -1,3 +1,18 @@
+# Abandoned
+
+TCC is still using 
+[EOL Electron](https://github.com/tuxedocomputers/tuxedo-control-center/issues/148)
+(and even the versions 
+[they plan updating to](https://github.com/tuxedocomputers/tuxedo-control-center/issues/148#issuecomment-1967876308) 
+are [already eol](https://endoflife.date/electron)).
+Additionally, electron 13 has been completely removed from
+nixpkgs,
+and [it's under discussion, to remove any eol electron versions](https://github.com/NixOS/nixpkgs/issues/295770).
+
+Consider using [tuxedo-rs](https://github.com/AaronErhardt/tuxedo-rs)
+as a replacement. It has less features, but should get the job done
+well enough. Alternatively, please feel free to fork this repo.
+
 # Tuxedo Control Center for NixOS
 
 [![Build](https://github.com/liketechnik/tuxedo-nixos/actions/workflows/build.yml/badge.svg)](https://github.com/liketechnik/tuxedo-nixos/actions/workflows/build.yml)
